@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Encuentra negocios activos cerca de ti. Información que vive.">
+  <title>deedpri - Información que vive</title>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../assets/css/homepage.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">deedpri.</div>
+    <button class="btn-agregar-negocio">
+      <i class="fas fa-plus"></i>
+      Agregar negocio
+    </button>
+  </header>
+
+  <!-- OFERTAS DEL DÍA -->
+  <section class="ofertas-hero">
+    <h2 class="section-title">🔥 OFERTAS DEL DÍA</h2>
+    <div class="ofertas-carrusel">
+      <!-- Se carga con JavaScript -->
+    </div>
+  </section>
+
+  <!-- BUSCADOR -->
+  <section class="buscador-compacto">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="¿Qué necesitas? Tacos, plomero, doctor..."
+      >
+      
+      <div class="search-divider"></div>
+      
+      <div class="location-wrapper">
+        <i class="fas fa-map-marker-alt location-icon"></i>
+        <select class="location-select" id="locationSelect">
+          <option value="zacualtipan">Zacualtipán</option>
+          <option value="tianguistengo">Tianguistengo</option>
+          <option value="san-agustin">San Agustín</option>
+          <option value="meztitlan">Meztitlán</option>
+          <option value="molango">Molango</option>
+        </select>
+      </div>
+      
+      <button class="voice-btn" id="voiceBtn">
+        <i class="fas fa-microphone"></i>
+      </button>
+    </div>
+  </section>
+
+  <!-- TOP 10 -->
+  <section class="top10-section">
+    <h2 class="section-title">⭐ TOP 10 DE LA SEMANA</h2>
+    <div class="top10-grid">
+      <!-- Se carga con JavaScript -->
+    </div>
+  </section>
+
+  <!-- CATEGORÍAS -->
+  <section class="categorias-section">
+    <h2 class="section-title">Explorar por categoría</h2>
+    <div class="categorias-grid">
+      <div class="categoria-card" data-categoria="alimentos">
+        <div class="categoria-icon">🍴</div>
+        <div class="categoria-name">Alimentos</div>
+      </div>
+      <div class="categoria-card" data-categoria="salud">
+        <div class="categoria-icon">🏥</div>
+        <div class="categoria-name">Salud</div>
+      </div>
+      <div class="categoria-card" data-categoria="servicios">
+        <div class="categoria-icon">🛠️</div>
+        <div class="categoria-name">Servicios</div>
+      </div>
+      <div class="categoria-card" data-categoria="compras">
+        <div class="categoria-icon">🛒</div>
+        <div class="categoria-name">Compras</div>
+      </div>
+      <div class="categoria-card" data-categoria="hogar">
+        <div class="categoria-icon">🏠</div>
+        <div class="categoria-name">Hogar</div>
+      </div>
+      <div class="categoria-card" data-categoria="urgencias">
+        <div class="categoria-icon">⚡</div>
+        <div class="categoria-name">Urgencias</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCRIPTS -->
+  <script src="../assets/js/negocios-data.js"></script>
+  <script src="../assets/js/homepage.js"></script>
+
+</body>
+</html>
