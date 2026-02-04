@@ -314,6 +314,73 @@ body {
   margin-bottom: 1rem;
 }
 
+/* ========================================
+   BOTÓN FLOTANTE CTA
+   ======================================== */
+
+.floating-cta {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: linear-gradient(135deg, #ffd300, #ffe44d);
+  padding: 1.2rem 2.5rem;
+  border-radius: 50px;
+  box-shadow: 0 10px 30px rgba(255, 211, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  z-index: 100;
+  animation: slideInRight 1s ease-out 0.5s both;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.floating-cta:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 20px 50px rgba(255, 211, 0, 0.5);
+}
+
+.floating-cta span {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #2a2a2a;
+}
+
+.floating-cta i {
+  font-size: 1.3rem;
+  color: #2a2a2a;
+  transition: transform 0.3s ease;
+}
+
+.floating-cta:hover i {
+  transform: translateX(5px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .floating-cta {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    padding: 1rem 1.8rem;
+  }
+  
+  .floating-cta span {
+    font-size: 0.95rem;
+  }
+}
+
 /* === RESPONSIVE === */
 @media (max-width: 1024px) {
   .ofertas-carrusel {

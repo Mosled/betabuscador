@@ -11,16 +11,13 @@
   
   <!-- Estilos -->
   <link rel="stylesheet" href="assets/css/homepage.css">
+  <link rel="stylesheet" href="assets/css/buscador.css">
 </head>
 <body>
 
   <!-- HEADER -->
   <header class="header">
     <div class="logo">deedpri.</div>
-    <button class="btn-agregar-negocio">
-      <i class="fas fa-plus"></i>
-      Agregar negocio
-    </button>
   </header>
 
   <!-- OFERTAS DEL DÍA -->
@@ -99,9 +96,23 @@
     </div>
   </section>
 
+  <!-- BOTÓN FLOTANTE CTA -->
+  <div class="floating-cta" id="floatingCta">
+    <span>¿Tienes un negocio?</span>
+    <i class="fas fa-arrow-right"></i>
+  </div>
+
   <!-- SCRIPTS -->
   <script src="assets/js/negocios-data.js"></script>
   <script src="assets/js/homepage.js"></script>
-
+ <!-- Script botón flotante -->
+  <script>
+    const floatingCta = document.getElementById('floatingCta');
+    if (floatingCta) {
+      floatingCta.addEventListener('click', function() {
+        window.open('https://wa.me/5217295414907?text=Hola%2C%20quiero%20información%20sobre%20registrar%20mi%20negocio', '_blank');
+      });
+    }
+  </script>
 </body>
 </html>
