@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultados de búsqueda - deedpri</title>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../assets/css/buscador.css">
+  <link rel="stylesheet" href="../assets/css/resultados.css">
+</head>
+<body>
+
+  <!-- Header de búsqueda -->
+  <div class="search-header">
+    <div class="search-header-content">
+      <a href="negocios-index.html" class="back-link">
+        <i class="fas fa-arrow-left"></i>
+        Volver al buscador
+      </a>
+      <h1 id="resultadosTitulo">Resultados de búsqueda</h1>
+      <div class="search-info" id="searchInfo"></div>
+    </div>
+  </div>
+
+  <!-- Contenedor de resultados -->
+  <div class="results-container">
+    <div class="results-count" id="resultsCount"></div>
+    
+    <!-- CHIP DE VER TODOS -->
+    <div class="filter-suggestion" id="filterSuggestion" style="display: none;">
+      <span class="suggestion-text">
+        💡 También hay más negocios en otras ubicaciones
+      </span>
+      <button class="btn-ver-todos" id="btnVerTodos">
+        📍 Ver en todas las ubicaciones
+        <span class="total-count"></span>
+      </button>
+    </div>
+    
+    <div id="resultadosContenedor"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../assets/js/negocios-data.js"></script>
+  <script src="../assets/js/sinonimos.js"></script>
+  <script src="../assets/js/buscador-inteligente.js"></script>
+  <script src="../assets/js/buscador.js"></script>
+  
+<script>
+console.log('🔄 Página de resultados cargada (sistema híbrido)');
+
+// 1. OBTENER PARÁMETROS DE LA URL (siempre principal)
+const urlParams = new URLSearchParams(window.location.search);
+const query = urlParams.get('q') || '';
+const categoria = urlParams.get('cat') || '';
+const ubicacion = urlParams.get('loc') || 'todos';
+
+console.log('📋 Parámetros URL:', { query, categoria, ubicacion });
+
+// 2. VERIFICAR SI HAY CACHE VÁLIDO
+let usarCache = false;
+let resultadosCache = null;
+
+try {
+  const cacheData = JSON.parse(sessionStorage.getItem('deedpri_resultados_cache') || '{}');
+  const cacheBusqueda = JSON.parse(sessionStorage.getItem('deedpri_ultima_busqueda') || '{}');
+  
+  // Verificar si el cache es válido (misma búsqueda y menos de 5 segundos)
+  const cacheEsValido = 
+    cacheData.query === query &&
+    cacheData.ubicacion === ubicacion &&
+    cacheData.categoria === categoria &&
+    cacheData.timestamp &&
+    Date.now() - cacheData.timestamp < 5000; // 5 segundos
+  
+  const busquedaReciente = 
+    cacheBusqueda.query === query &&
+    cacheBusqueda.ubicacion === ubicacion &&
+    cacheBusqueda.categoria === categoria &&
+    cacheBusqueda.timestamp &&
+    Date.now() - cacheBusqueda.timestamp < 2000; // 2 segundos
+  
+  if (cacheEsValido && busquedaReciente) {
+    console.log('💾 Cargando desde cache rápido');
+    usarCache = true;
+    
+    // Recuperar negocios completos desde los IDs cacheados
+    if (cacheData.resultados && Array.isArray(cacheData.resultados)) {
+      resultadosCache = cacheData.resultados.map(id => 
+        negociosDB.find(n => n.id === id)
+      ).filter(n => n !== undefined); // Filtrar undefined
+    }
+  }
+} catch (e) {
+  console.warn('⚠️ Error al leer cache:', e.message);
+}
+
+// 3. REALIZAR BÚSQUEDA (desde cache o nueva)
+let resultados = [];
+
+if (usarCache && resultadosCache && resultadosCache.length > 0) {
+  resultados = resultadosCache;
+  console.log(`✅ ${resultados.length} resultados desde cache`);
+} else {
+  // Búsqueda normal
+  if (query) {
+    console.log('🔍 Buscando por query:', query);
+    resultados = buscarNegocios(query, ubicacion);
+  } else if (categoria) {
+    console.log('🏷️ Buscando por categoría:', categoria);
+    resultados = obtenerPorCategoria(categoria, ubicacion);
+  } else {
+    console.log('📋 Mostrando todos los negocios');
+    resultados = ubicacion && ubicacion !== 'todos' 
+      ? negociosDB.filter(n => n.municipio === ubicacion)
+      : negociosDB;
+  }
+  
+  console.log(`✅ ${resultados.length} resultados encontrados`);
+  
+  // Guardar en cache para futuras navegaciones
+  try {
+    sessionStorage.setItem('deedpri_resultados_cache', JSON.stringify({
+      resultados: resultados.map(n => n.id),
+      query: query,
+      categoria: categoria,
+      ubicacion: ubicacion,
+      timestamp: Date.now()
+    }));
+    
+    sessionStorage.setItem('deedpri_ultima_busqueda', JSON.stringify({
+      query: query,
+      categoria: categoria,
+      ubicacion: ubicacion,
+      timestamp: Date.now()
+    }));
+  } catch (e) {
+    console.warn('⚠️ No se pudo guardar cache:', e.message);
+  }
+}
+
+// 4. FUNCIÓN PARA ACTUALIZAR INTERFAZ DE RESULTADOS
+window.actualizarInterfazResultados = function(resultados, query, categoria, ubicacion) {
+  console.log(`🎨 Actualizando interfaz con ${resultados.length} resultados`);
+  
+  // 1. ACTUALIZAR TÍTULO
+  const tituloElement = document.getElementById('resultadosTitulo');
+  const infoElement = document.getElementById('searchInfo');
+  
+  if (tituloElement) {
+    if (query) {
+      tituloElement.textContent = `Resultados para "${query}"`;
+    } else if (categoria) {
+      const categoriaNombre = categoria.charAt(0).toUpperCase() + categoria.slice(1);
+      tituloElement.textContent = `Categoría: ${categoriaNombre}`;
+    } else {
+      tituloElement.textContent = 'Todos los negocios';
+    }
+    
+    // Actualizar info
+    if (infoElement) {
+      let infoHTML = '';
+      if (query) {
+        infoHTML += `<span><i class="fas fa-search"></i> ${query}</span>`;
+      }
+      if (categoria) {
+        const categoriaNombre = categoria.charAt(0).toUpperCase() + categoria.slice(1);
+        infoHTML += `<span><i class="fas fa-tag"></i> ${categoriaNombre}</span>`;
+      }
+      if (ubicacion && ubicacion !== 'todos') {
+        const ubicacionNombre = ubicacion.replace('-', ' ')
+          .split(' ')
+          .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(' ');
+        infoHTML += `<span><i class="fas fa-map-marker-alt"></i> ${ubicacionNombre}</span>`;
+      }
+      infoElement.innerHTML = infoHTML;
+    }
+  }
+  
+  // 2. ACTUALIZAR CONTADOR
+  const countElement = document.getElementById('resultsCount');
+  if (countElement) {
+    countElement.textContent = `${resultados.length} ${resultados.length === 1 ? 'negocio encontrado' : 'negocios encontrados'}`;
+  }
+  
+  // 3. ACTUALIZAR SUGERENCIA DE UBICACIÓN
+  const filterSuggestion = document.getElementById('filterSuggestion');
+  const btnVerTodos = document.getElementById('btnVerTodos');
+  
+  if (filterSuggestion && btnVerTodos && ubicacion && ubicacion !== 'todos') {
+    const todosLosNegocios = query ? buscarNegocios(query, 'todos') : 
+      (categoria ? obtenerPorCategoria(categoria, 'todos') : negociosDB);
+    const diferencia = todosLosNegocios.length - resultados.length;
+    
+    if (diferencia > 0) {
+      filterSuggestion.style.display = 'flex';
+      btnVerTodos.querySelector('.total-count').textContent = `(${todosLosNegocios.length} total)`;
+      
+      btnVerTodos.onclick = function() {
+        const params = new URLSearchParams(window.location.search);
+        params.set('loc', 'todos');
+        window.location.href = `resultados.html?${params.toString()}`;
+      };
+    } else {
+      filterSuggestion.style.display = 'none';
+    }
+  }
+  
+  // 4. ACTUALIZAR LISTA DE RESULTADOS
+  const contenedor = document.getElementById('resultadosContenedor');
+  if (contenedor) {
+    contenedor.innerHTML = '';
+    
+    if (resultados.length === 0) {
+      contenedor.innerHTML = `
+        <div class="no-results">
+          <div class="no-results-icon">
+            <i class="fas fa-search"></i>
+          </div>
+          <h2>No encontramos resultados</h2>
+          <p>Intenta con otros términos de búsqueda o explora por categorías</p>
+          <br>
+          <a href="negocios-index.html" class="btn-action btn-whatsapp">
+            <i class="fas fa-arrow-left"></i>
+            Volver al buscador
+          </a>
+        </div>
+      `;
+    } else {
+      resultados.forEach(negocio => {
+        const card = crearCardNegocio(negocio);
+        contenedor.innerHTML += card;
+      });
+      
+      // Agregar event listeners a las cards
+      document.querySelectorAll('.negocio-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+          if (e.target.tagName === 'A' || e.target.closest('a')) {
+            return;
+          }
+          const id = this.dataset.id;
+          window.location.href = `perfil.html?id=${id}`;
+        });
+      });
+    }
+  }
+  
+  // 5. ANIMACIÓN DE ACTUALIZACIÓN (opcional)
+  const container = document.querySelector('.results-container');
+  if (container) {
+    container.style.opacity = '0.8';
+    setTimeout(() => {
+      container.style.opacity = '1';
+    }, 300);
+  }
+};
+
+// 5. FUNCIÓN PARA CREAR CARD DE NEGOCIO
+window.crearCardNegocio = function(negocio) {
+  const planClass = negocio.plan || 'gratis';
+  const badge = negocio.destacado ? `<div class="plan-badge ${planClass}">${
+    planClass === 'premium-plus' ? '👑 PREMIUM PLUS' : 
+    planClass === 'premium' ? '⭐ DESTACADO' : ''
+  }</div>` : '';
+  
+  const rating = negocio.rating ? `
+    <div class="negocio-rating">
+      ${'★'.repeat(Math.floor(negocio.rating))}${'☆'.repeat(5 - Math.floor(negocio.rating))}
+      <span style="color: #666;">${negocio.rating} (${negocio.reviews || 0} reseñas)</span>
+    </div>
+  ` : '';
+  
+  const whatsapp = negocio.whatsapp ? `
+    <a href="https://wa.me/52${negocio.whatsapp}" class="btn-action btn-whatsapp" target="_blank" onclick="event.stopPropagation()">
+      <i class="fab fa-whatsapp"></i>
+      WhatsApp
+    </a>
+  ` : '';
+  
+  const telefono = negocio.telefono ? `
+    <a href="tel:${negocio.telefono}" class="btn-action btn-telefono" onclick="event.stopPropagation()">
+      <i class="fas fa-phone"></i>
+      Llamar
+    </a>
+  ` : '';
+  
+  return `
+    <div class="negocio-card ${planClass}" data-id="${negocio.id}">
+      ${badge}
+      <div class="negocio-grid">
+        <img src="${negocio.foto}" alt="${negocio.nombre}" class="negocio-foto">
+        <div class="negocio-info">
+          <h3 class="negocio-nombre">${negocio.nombre}</h3>
+          ${rating}
+          <p class="negocio-categoria">
+            <i class="fas fa-tag"></i>
+            ${negocio.subcategoria || negocio.categoria}
+          </p>
+          <p class="negocio-direccion">
+            <i class="fas fa-map-marker-alt"></i>
+            ${negocio.direccion}
+          </p>
+          <div class="negocio-acciones">
+            ${whatsapp}
+            ${telefono}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+};
+
+// 6. MOSTRAR INFORMACIÓN DE BÚSQUEDA INICIAL
+const tituloElement = document.getElementById('resultadosTitulo');
+const infoElement = document.getElementById('searchInfo');
+
+let titulo = 'Resultados de búsqueda';
+let infoHTML = '';
+
+if (query) {
+  titulo = `Resultados para "${query}"`;
+  infoHTML += `<span><i class="fas fa-search"></i> ${query}</span>`;
+}
+
+if (categoria) {
+  const categoriaNombre = categoria.charAt(0).toUpperCase() + categoria.slice(1);
+  titulo = `Categoría: ${categoriaNombre}`;
+  infoHTML += `<span><i class="fas fa-tag"></i> ${categoriaNombre}</span>`;
+}
+
+if (ubicacion && ubicacion !== 'todos') {
+  const ubicacionNombre = ubicacion.replace('-', ' ')
+    .split(' ')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+  infoHTML += `<span><i class="fas fa-map-marker-alt"></i> ${ubicacionNombre}</span>`;
+}
+
+if (tituloElement) tituloElement.textContent = titulo;
+if (infoElement) infoElement.innerHTML = infoHTML;
+
+// 7. MOSTRAR CONTADOR
+const countElement = document.getElementById('resultsCount');
+if (countElement) {
+  countElement.textContent = `${resultados.length} ${resultados.length === 1 ? 'negocio encontrado' : 'negocios encontrados'}`;
+}
+
+// 8. SUGERENCIA DE VER TODAS LAS UBICACIONES
+const filterSuggestion = document.getElementById('filterSuggestion');
+const btnVerTodos = document.getElementById('btnVerTodos');
+
+if (filterSuggestion && btnVerTodos && ubicacion && ubicacion !== 'todos') {
+  const todosLosNegocios = query ? buscarNegocios(query, 'todos') : 
+    (categoria ? obtenerPorCategoria(categoria, 'todos') : negociosDB);
+  const diferencia = todosLosNegocios.length - resultados.length;
+  
+  if (diferencia > 0) {
+    filterSuggestion.style.display = 'flex';
+    btnVerTodos.querySelector('.total-count').textContent = `(${todosLosNegocios.length} total)`;
+    
+    btnVerTodos.onclick = function() {
+      const params = new URLSearchParams(window.location.search);
+      params.set('loc', 'todos');
+      window.location.href = `resultados.html?${params.toString()}`;
+    };
+  } else {
+    filterSuggestion.style.display = 'none';
+  }
+}
+
+// 9. MOSTRAR RESULTADOS INICIALES
+const contenedor = document.getElementById('resultadosContenedor');
+
+if (resultados.length === 0) {
+  contenedor.innerHTML = `
+    <div class="no-results">
+      <div class="no-results-icon">
+        <i class="fas fa-search"></i>
+      </div>
+      <h2>No encontramos resultados</h2>
+      <p>Intenta con otros términos de búsqueda o explora por categorías</p>
+      <br>
+      <a href="negocios-index.html" class="btn-action btn-whatsapp">
+        <i class="fas fa-arrow-left"></i>
+        Volver al buscador
+      </a>
+    </div>
+  `;
+} else {
+  contenedor.innerHTML = '';
+  resultados.forEach(negocio => {
+    const card = crearCardNegocio(negocio);
+    contenedor.innerHTML += card;
+  });
+  
+  // Agregar event listeners a las cards
+  document.querySelectorAll('.negocio-card').forEach(card => {
+    card.addEventListener('click', function(e) {
+      if (e.target.tagName === 'A' || e.target.closest('a')) {
+        return;
+      }
+      const id = this.dataset.id;
+      window.location.href = `perfil.html?id=${id}`;
+    });
+  });
+}
+
+console.log(`✅ Mostrando ${resultados.length} resultados en pantalla`);
+
+// 10. MANEJAR POPSTATE (para botones atrás/adelante del navegador)
+window.addEventListener('popstate', function(event) {
+  console.log('↩️ Popstate en resultados.html');
+  
+  // Obtener parámetros actuales
+  const urlParams = new URLSearchParams(window.location.search);
+  const query = urlParams.get('q') || '';
+  const categoria = urlParams.get('cat') || '';
+  const ubicacion = urlParams.get('loc') || 'todos';
+  
+  console.log('🔄 Navegación popstate:', { query, categoria, ubicacion });
+  
+  // Recargar con nuevos parámetros
+  if (query || categoria || ubicacion) {
+    // Usar cache si está disponible
+    try {
+      const cacheData = JSON.parse(sessionStorage.getItem('deedpri_resultados_cache') || '{}');
+      
+      if (cacheData.query === query && 
+          cacheData.ubicacion === ubicacion &&
+          cacheData.categoria === categoria &&
+          cacheData.timestamp &&
+          Date.now() - cacheData.timestamp < 10000) { // 10 segundos
+        
+        console.log('💾 Recuperando desde cache (popstate)');
+        // Actualizar interfaz desde cache
+        if (typeof actualizarInterfazResultados === 'function') {
+          const resultadosCache = cacheData.resultados.map(id => 
+            negociosDB.find(n => n.id === id)
+          ).filter(n => n !== undefined);
+          actualizarInterfazResultados(resultadosCache, query, categoria, ubicacion);
+        }
+        return;
+      }
+    } catch (e) {
+      console.warn('⚠️ Error cache popstate:', e.message);
+    }
+    
+    // Si no hay cache válido, recargar normalmente
+    window.location.reload();
+  }
+});
+</script>
+</body>
+</html>
