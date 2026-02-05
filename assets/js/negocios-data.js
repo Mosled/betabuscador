@@ -26,7 +26,7 @@ const negociosDB = [
     email: "contacto@elsabroso.com",
     horario: "Lunes a Domingo: 8:00 AM - 10:00 PM",
     descripcion: "Restaurante de comida mexicana tradicional con más de 20 años de experiencia. Especialistas en barbacoa, mole y antojitos regionales. Ambiente familiar y precios accesibles.",
-    foto: "https://via.placeholder.com/800x600/ffd300/2a2a2a?text=El+Sabroso",
+    foto: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&h=600&fit=crop",
     galeria: [
       "https://via.placeholder.com/600x400/ffd300/2a2a2a?text=Platillo+1",
       "https://via.placeholder.com/600x400/ffd300/2a2a2a?text=Platillo+2",
@@ -41,6 +41,14 @@ const negociosDB = [
     plan: "premium-plus",
     destacado: true,
     verificado: true
+,
+    oferta: {
+      activa: true,
+      destacada: true,
+      badge: "2x1 HOY",
+      titulo: "Tacos Don Pepe",
+      descripcion: "Todos los tacos al pastor 2x1 hasta las 8pm"
+    }
   },
   {
     id: 2,
@@ -60,7 +68,7 @@ const negociosDB = [
     email: "dra.garcia@dental.com",
     horario: "Lunes a Viernes: 9:00 AM - 7:00 PM, Sábado: 9:00 AM - 2:00 PM",
     descripcion: "Clínica dental moderna con equipamiento de última generación. Especialistas en ortodoncia, endodoncia y estética dental. Aceptamos seguros médicos mayores.",
-    foto: "https://via.placeholder.com/800x600/004aad/ffffff?text=Dental+Garcia",
+    foto: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&h=600&fit=crop",
     galeria: [
       "https://via.placeholder.com/600x400/004aad/ffffff?text=Consultorio",
       "https://via.placeholder.com/600x400/004aad/ffffff?text=Equipamiento",
@@ -75,6 +83,13 @@ const negociosDB = [
     plan: "premium-plus",
     destacado: true,
     verificado: true
+,
+    oferta: {
+      activa: true,
+      destacada: false,
+      badge: "GRATIS",
+      titulo: "Segunda consulta"
+    }
   },
 
   // ===== PREMIUM (8) =====
@@ -95,7 +110,7 @@ const negociosDB = [
     whatsapp: "7713456789",
     horario: "Martes a Domingo: 2:00 PM - 11:00 PM",
     descripcion: "Pizzas artesanales al horno de leña. Masa fresca todos los días. Servicio a domicilio sin costo extra en la zona centro.",
-    foto: "../assets/img/negocios/pizzeria-italiana.webp",
+    foto: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&h=600&fit=crop",
     galeria: [
       "https://via.placeholder.com/600x400/e74c3c/ffffff?text=Pizza+1",
       "https://via.placeholder.com/600x400/e74c3c/ffffff?text=Pizza+2"
@@ -107,6 +122,13 @@ const negociosDB = [
     plan: "premium",
     destacado: true,
     verificado: true
+,
+    oferta: {
+      activa: true,
+      destacada: false,
+      badge: "-30%",
+      titulo: "Pizza Familiar + Refresco"
+    }
   },
   {
     id: 4,
@@ -125,7 +147,7 @@ const negociosDB = [
     whatsapp: "7755123456",
     horario: "Servicio 24 horas, todos los días",
     descripcion: "Servicio de plomería de emergencia y mantenimiento. Atención inmediata. Garantía en todos nuestros trabajos.",
-    foto: "https://via.placeholder.com/800x600/3498db/ffffff?text=Plomeria+Jimenez",
+    foto: "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=800&h=600&fit=crop",
     galeria: [
       "https://via.placeholder.com/600x400/3498db/ffffff?text=Herramientas",
       "https://via.placeholder.com/600x400/3498db/ffffff?text=Trabajo"
@@ -153,7 +175,7 @@ const negociosDB = [
     whatsapp: "7718765432",
     horario: "Lunes a Sábado: 10:00 AM - 8:00 PM",
     descripcion: "Clínica veterinaria completa. Consultas, cirugías, estética canina y venta de alimentos. Médicos certificados.",
-    foto: "https://via.placeholder.com/800x600/27ae60/ffffff?text=Pet+Care",
+    foto: "https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=800&h=600&fit=crop",
     galeria: [
       "https://via.placeholder.com/600x400/27ae60/ffffff?text=Clinica",
       "https://via.placeholder.com/600x400/27ae60/ffffff?text=Consulta"
@@ -182,7 +204,7 @@ const negociosDB = [
     whatsapp: "7712987654",
     horario: "Lunes a Sábado: 8:00 AM - 7:00 PM, Domingo: 8:00 AM - 2:00 PM",
     descripcion: "Todo para construcción y reparaciones del hogar. Materiales, herramientas y equipo. Entrega a domicilio.",
-    foto: "https://via.placeholder.com/800x600/f39c12/2a2a2a?text=El+Constructor",
+    foto: "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=800&h=600&fit=crop",
     galeria: [
       "https://via.placeholder.com/600x400/f39c12/2a2a2a?text=Materiales",
       "https://via.placeholder.com/600x400/f39c12/2a2a2a?text=Herramientas"
@@ -211,7 +233,7 @@ const negociosDB = [
     whatsapp: "7716543210",
     horario: "Lunes a Domingo: 7:00 AM - 10:00 PM",
     descripcion: "Café de especialidad, repostería artesanal y desayunos. WiFi gratis. Ambiente acogedor para trabajar o platicar.",
-    foto: "https://via.placeholder.com/800x600/8e44ad/ffffff?text=Cafeteria+Aroma",
+    foto: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=600&fit=crop",
     galeria: [
       "https://via.placeholder.com/600x400/8e44ad/ffffff?text=Cafe",
       "https://via.placeholder.com/600x400/8e44ad/ffffff?text=Reposteria"
@@ -222,6 +244,13 @@ const negociosDB = [
     plan: "premium",
     destacado: true,
     verificado: true
+,
+    oferta: {
+      activa: true,
+      destacada: false,
+      badge: "Cafe",
+      titulo: "2x1"
+    }
   },
   {
     id: 8,
@@ -240,7 +269,7 @@ const negociosDB = [
     whatsapp: "7717654321",
     horario: "Martes a Domingo: 10:00 AM - 7:00 PM",
     descripcion: "Cortes de cabello para dama y caballero, tintes, permanentes, peinados para eventos. Previa cita.",
-    foto: "https://via.placeholder.com/800x600/e91e63/ffffff?text=Glamour",
+    foto: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&h=600&fit=crop",
     galeria: [
       "https://via.placeholder.com/600x400/e91e63/ffffff?text=Salon",
       "https://via.placeholder.com/600x400/e91e63/ffffff?text=Cortes"
@@ -251,6 +280,13 @@ const negociosDB = [
     plan: "premium",
     destacado: true,
     verificado: true
+,
+    oferta: {
+      activa: true,
+      destacada: false,
+      badge: "PROMO",
+      titulo: "-20%"
+    }
   },
   {
     id: 9,
@@ -268,7 +304,7 @@ const negociosDB = [
     whatsapp: "7755987654",
     horario: "Lunes a Viernes: 6:00 AM - 10:00 PM, Sábado: 8:00 AM - 6:00 PM",
     descripcion: "Gimnasio equipado con pesas, cardio y clases grupales. Entrenadores certificados. Regaderas y vestidores.",
-    foto: "https://via.placeholder.com/800x600/16a085/ffffff?text=Fitness+Plus",
+    foto: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=600&fit=crop",
     galeria: [
       "https://via.placeholder.com/600x400/16a085/ffffff?text=Equipamiento",
       "https://via.placeholder.com/600x400/16a085/ffffff?text=Clases"
@@ -298,7 +334,7 @@ const negociosDB = [
     whatsapp: "7723456789",
     horario: "Lunes a Sábado: 8:00 AM - 6:00 PM",
     descripcion: "Servicio mecánico completo, afinaciones, diagnóstico computarizado, frenos y suspensión. Experiencia de 25 años.",
-    foto: "https://via.placeholder.com/800x600/95a5a6/ffffff?text=Taller+Rodriguez",
+    foto: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=800&h=600&fit=crop",
     galeria: [
       "https://via.placeholder.com/600x400/95a5a6/ffffff?text=Taller",
       "https://via.placeholder.com/600x400/95a5a6/ffffff?text=Diagnostico"
