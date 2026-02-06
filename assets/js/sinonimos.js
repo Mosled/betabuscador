@@ -1,13 +1,103 @@
 /* ========================================
-   DICCIONARIO DE SINÓNIMOS
+   SISTEMA DE INTENCIONES SEMÁNTICAS
    Archivo: assets/js/sinonimos.js
-   Fase 1 del Buscador Inteligente
+   Versión 2.0 - Con detección de intenciones
    ======================================== */
 
+// ========================================
+// INTENCIONES SEMÁNTICAS
+// ========================================
+const INTENCIONES = {
+  // COMIDA CON DELIVERY/DOMICILIO
+  'comida_delivery': {
+    patterns: [
+      'comida a domicilio', 'comida domicilio', 'delivery comida',
+      'pedir comida', 'ordenar comida', 'comida para llevar',
+      'comida llevar', 'envio comida', 'envío comida'
+    ],
+    categorias: ['alimentos'],
+    keywords_boost: ['delivery', 'domicilio', 'llevar', 'envio'],
+    score_boost: 150
+  },
+  
+  // PIZZA/COMIDA RÁPIDA
+  'comida_rapida': {
+    patterns: [
+      'pizza domicilio', 'pizza delivery', 'pedir pizza',
+      'hamburguesa domicilio', 'tacos domicilio'
+    ],
+    categorias: ['alimentos'],
+    subcategorias: ['Pizzerías', 'Comida Rápida', 'Taquerías'],
+    score_boost: 150
+  },
+  
+  // SERVICIOS URGENTES
+  'servicios_urgentes': {
+    patterns: [
+      'plomero urgente', 'plomeria urgente', 'plomero 24',
+      'electricista urgente', 'cerrajero urgente',
+      'mecanico urgente', 'doctor urgente'
+    ],
+    keywords_boost: ['urgente', 'emergencia', '24', '24h', 'rapido'],
+    score_boost: 100
+  },
+  
+  // SALUD/MÉDICO
+  'atencion_medica': {
+    patterns: [
+      'doctor urgente', 'medico urgente', 'consulta medica',
+      'consulta doctor', 'necesito doctor', 'ir al doctor'
+    ],
+    categorias: ['salud'],
+    subcategorias: ['Consultorios', 'Clínicas'],
+    score_boost: 120
+  },
+  
+  // DENTAL
+  'atencion_dental': {
+    patterns: [
+      'dentista urgente', 'dolor muela', 'dolor diente',
+      'limpieza dental', 'consulta dental', 'sacar muela'
+    ],
+    categorias: ['salud'],
+    subcategorias: ['Dentistas'],
+    keywords_boost: ['dentista', 'dental', 'dientes', 'muela'],
+    score_boost: 120
+  },
+  
+  // REPARACIONES HOGAR
+  'reparacion_hogar': {
+    patterns: [
+      'arreglar puerta', 'reparar puerta', 'arreglar llave',
+      'arreglar fuga', 'reparar fuga', 'arreglar luz',
+      'reparar instalacion', 'arreglar tuberia'
+    ],
+    categorias: ['servicios'],
+    keywords_boost: ['reparacion', 'arreglar', 'componer', 'arreglo'],
+    score_boost: 100
+  },
+  
+  // BELLEZA/CORTE
+  'belleza_corte': {
+    patterns: [
+      'cortar pelo', 'corte cabello', 'corte pelo',
+      'cortarse el pelo', 'donde me corto el pelo',
+      'peluqueria', 'estética'
+    ],
+    categorias: ['servicios'],
+    subcategorias: ['Estéticas', 'Barberías'],
+    keywords_boost: ['corte', 'cabello', 'pelo', 'peinado'],
+    score_boost: 100
+  }
+};
+
+// ========================================
+// DICCIONARIO DE SINÓNIMOS
+// ========================================
 const SINONIMOS = {
   
   // === COMIDA Y ALIMENTOS ===
-  comida: ['food', 'comer', 'hambre', 'platillo', 'antojo', 'almorzar', 'cenar', 'desayunar', 'lonche'],
+  comida: ['food', 'comer', 'hambre', 'platillo', 'antojo', 'almorzar', 'cenar', 'desayunar', 'lonche', 'restaurant', 'restaurante'],
   pizza: ['piza', 'pissa', 'pizzeria', 'pizzería', 'italiana'],
   tacos: ['taqueria', 'taquería', 'taco', 'pastor', 'suadero', 'carnitas'],
   tortas: ['torta', 'lonche', 'sandwich', 'sándwich', 'loncheria'],
@@ -16,12 +106,11 @@ const SINONIMOS = {
   mariscos: ['pescado', 'camarones', 'ceviche', 'ostiones'],
   cafe: ['café', 'cafeteria', 'cafetería', 'coffee', 'capuchino'],
   panaderia: ['panadería', 'pan', 'pasteles', 'pasteleria', 'pastelería', 'reposteria'],
-  restaurant: ['restaurante', 'restoran', 'comida'],
   
   // === SERVICIOS ===
   plomero: ['plomeria', 'plomería', 'tuberia', 'tubería', 'fuga', 'agua'],
   electricista: ['electricidad', 'luz', 'instalacion', 'instalación', 'electrico'],
-  mecanico: ['mecánico', 'taller', 'carro', 'auto', 'reparacion'],
+  mecanico: ['mecánico', 'taller', 'carro', 'auto', 'reparacion', 'coche'],
   carpintero: ['carpinteria', 'carpintería', 'madera', 'muebles'],
   cerrajero: ['cerrajeria', 'cerrajería', 'llaves', 'chapa', 'cerradura'],
   pintor: ['pintura', 'pintado', 'decoracion', 'decoración'],
@@ -30,7 +119,7 @@ const SINONIMOS = {
   // === TECNOLOGÍA ===
   celular: ['cel', 'selu', 'telefono', 'teléfono', 'movil', 'móvil', 'smartphone', 'iphone', 'android'],
   computadora: ['compu', 'pc', 'laptop', 'computador', 'ordenador'],
-  reparacion: ['reparación', 'arreglar', 'componer', 'arreglo', 'servicio'],
+  reparacion: ['reparación', 'arreglar', 'componer', 'arreglo', 'servicio', 'reparar'],
   
   // === SALUD ===
   doctor: ['dr', 'médico', 'medico', 'consulta', 'clinica', 'clínica'],
@@ -55,21 +144,46 @@ const SINONIMOS = {
   
   // === BELLEZA ===
   estetica: ['estética', 'salon', 'salón', 'belleza', 'peluqueria', 'peluquería'],
-  barberia: ['barbería', 'barber', 'corte', 'cabello'],
+  barberia: ['barbería', 'barber', 'corte', 'cabello', 'pelo'],
   uñas: ['manicure', 'pedicure', 'nail'],
   
   // === ADJETIVOS COMUNES (para ignorar) ===
   bueno: ['buena', 'buenos', 'buenas', 'rico', 'rica', 'ricos', 'ricas', 'sabroso', 'delicioso'],
   barato: ['bara', 'economico', 'económico', 'accesible', 'precio'],
-  rapido: ['rápido', 'veloz', 'express', 'urgente'],
+  rapido: ['rápido', 'veloz', 'express'],
   cerca: ['cercano', 'cercana', 'proximo', 'próximo'],
   
   // === URGENCIAS ===
-  urgente: ['urgencia', 'emergencia', 'rapido', 'rápido', '24h', '24 horas', 'abierto'],
+  urgente: ['urgencia', 'emergencia', '24h', '24 horas', 'abierto'],
   
   // === ENVÍO Y DELIVERY ===
-  domicilio: ['delivery', 'envio', 'envío', 'entregar', 'llevar'],
+  domicilio: ['delivery', 'envio', 'envío', 'entregar', 'llevar', 'pedir', 'ordenar']
 };
+
+// ========================================
+// STOPWORDS (palabras a ignorar)
+// ========================================
+const STOPWORDS = ['a', 'el', 'la', 'los', 'las', 'un', 'una', 'de', 'del', 'en', 'para', 'por', 'con', 'sin', 'mi', 'tu', 'su'];
+
+/**
+ * Detectar intención semántica en la query
+ * @param {string} query - Query del usuario
+ * @returns {Object|null} - Intención detectada o null
+ */
+function detectarIntencion(query) {
+  query = query.toLowerCase().trim();
+  
+  for (const [nombre, intencion] of Object.entries(INTENCIONES)) {
+    for (const pattern of intencion.patterns) {
+      if (query.includes(pattern)) {
+        console.log(`🎯 INTENCIÓN DETECTADA: ${nombre} (pattern: "${pattern}")`);
+        return { nombre, ...intencion };
+      }
+    }
+  }
+  
+  return null;
+}
 
 /**
  * Obtener todos los sinónimos de una palabra
@@ -96,17 +210,33 @@ function obtenerSinonimos(palabra) {
 }
 
 /**
+ * Limpiar query de stopwords
+ * @param {string} query - Query original
+ * @returns {string} - Query sin stopwords
+ */
+function limpiarStopwords(query) {
+  const palabras = query.toLowerCase().split(' ');
+  const palabrasLimpias = palabras.filter(p => !STOPWORDS.includes(p));
+  return palabrasLimpias.join(' ');
+}
+
+/**
  * Expandir query con sinónimos
  * @param {string} query - Búsqueda original
  * @returns {Array} - Array de términos expandidos
  */
 function expandirConSinonimos(query) {
+  // Limpiar stopwords primero
+  query = limpiarStopwords(query);
+  
   const palabras = query.toLowerCase().split(' ');
   const terminosExpandidos = new Set();
   
   palabras.forEach(palabra => {
-    const sinonimos = obtenerSinonimos(palabra);
-    sinonimos.forEach(sin => terminosExpandidos.add(sin));
+    if (palabra.trim()) {
+      const sinonimos = obtenerSinonimos(palabra);
+      sinonimos.forEach(sin => terminosExpandidos.add(sin));
+    }
   });
   
   return Array.from(terminosExpandidos);
@@ -129,5 +259,6 @@ function esAdjetivoIgnorable(palabra) {
   return adjetivosIgnorables.includes(palabra);
 }
 
-console.log('✅ Diccionario de sinónimos cargado');
+console.log('✅ Sistema de Intenciones Semánticas v2.0 cargado');
+console.log(`🎯 ${Object.keys(INTENCIONES).length} intenciones disponibles`);
 console.log(`📚 ${Object.keys(SINONIMOS).length} categorías de sinónimos disponibles`);

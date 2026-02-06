@@ -18,7 +18,8 @@ const negociosDB = [
       "restaurante", "comida", "food", "comer", "almorzar",
       "cenar", "desayunar", "mexicana", "platillos", "menu",
       "barbacoa", "mole", "antojitos", "familiar", "regional",
-      "tradicional", "tipico", "sabroso", "rico", "economico"
+      "tradicional", "tipico", "sabroso", "rico", "economico",
+      "delivery", "domicilio", "llevar", "envio", "pedir"
     ],
     direccion: "Av. Juárez #456, Centro",
     telefono: "7712345678",
@@ -103,7 +104,8 @@ const negociosDB = [
       "pizza", "pizzas", "pizzeria", "italiana", "italiano",
       "horno", "leña", "artesanal", "masa", "pepperoni",
       "hawaiana", "margarita", "queso", "tomate", "delivery",
-      "domicilio", "comida", "comer", "cenar", "pasta"
+      "domicilio", "comida", "comer", "cenar", "pasta",
+      "llevar", "envio", "pedir"
     ],
     direccion: "Av. Hidalgo #123, Centro",
     telefono: "7713456789",
@@ -203,7 +205,7 @@ const negociosDB = [
     telefono: "7712987654",
     whatsapp: "7712987654",
     horario: "Lunes a Sábado: 8:00 AM - 7:00 PM, Domingo: 8:00 AM - 2:00 PM",
-    descripcion: "Todo para construcción y reparaciones del hogar. Materiales, herramientas y equipo. Entrega a domicilio.",
+    descripcion: "Ferretería completa con materiales de construcción, herramientas y equipo. Amplio surtido para profesionales y hogar.",
     foto: "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=800&h=600&fit=crop",
     galeria: [
       "https://via.placeholder.com/600x400/f39c12/2a2a2a?text=Materiales",
