@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Perfil Premium - deedpri</title>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="assets/css/perfil-premium.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">deedpri.</a>
+      <a href="index.html" class="btn-volver">
+        <i class="fas fa-arrow-left"></i>
+        <span>Volver</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- PERFIL HEADER -->
+  <section class="profile-hero">
+    <div class="container">
+      <div class="profile-header">
+        <div class="profile-pic" id="profile-pic"></div>
+        <div class="profile-info">
+          <h1 id="negocio-nombre">Cargando...</h1>
+          <div class="profile-meta">
+            <span class="rating" id="rating"></span>
+            <span class="separator">•</span>
+            <span class="category" id="category"></span>
+          </div>
+          <div class="badges" id="badges-container"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARDS PINTEREST STYLE -->
+  <section class="cards-section">
+    <div class="container">
+      <div class="cards-masonry" id="cards-container">
+        <!-- Cards se generan dinámicamente con JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL PARA CONTENIDO -->
+  <div class="modal" id="modal">
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="modal-body" id="modal-body">
+        <!-- Contenido dinámico -->
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 deedpri - Información que vive</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="assets/js/negocios-data.js"></script>
+  <script src="assets/js/perfil-premium.js"></script>
+
+</body>
+</html>

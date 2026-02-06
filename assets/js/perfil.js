@@ -28,6 +28,13 @@ document.addEventListener('DOMContentLoaded', function() {
   
   console.log('✅ Negocio encontrado:', negocio.nombre);
   
+  // 🔄 REDIRECCIÓN AUTOMÁTICA A PERFIL PREMIUM
+  if (negocio.plan === 'premium' || negocio.plan === 'premium-plus') {
+    console.log('🎨 Negocio es premium, redirigiendo a perfil premium...');
+    window.location.href = `perfil-premium.html?id=${negocioId}`;
+    return;
+  }
+  
   // Cargar información
   cargarInformacion(negocio);
   cargarNegociosSimilares(negocio);

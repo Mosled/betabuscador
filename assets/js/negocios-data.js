@@ -11,6 +11,7 @@ const negociosDB = [
   {
     id: 1,
     nombre: "Restaurante El Sabroso",
+    plan: "premium",
     categoria: "alimentos",
     subcategoria: "Restaurantes",
     municipio: "zacualtipan",
@@ -39,7 +40,6 @@ const negociosDB = [
     instagram: "@elsabroso_oficial",
     coordenadas: { lat: 20.1234, lng: -98.5678 },
     cupon: "15% de descuento en consumo mayor a $300",
-    plan: "premium-plus",
     destacado: true,
     verificado: true
 ,
