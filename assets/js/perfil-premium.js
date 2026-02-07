@@ -497,8 +497,8 @@ function actualizarOpenGraph(negocio) {
   const urlBase = window.location.origin;
   // Para GitHub Pages, usar .html en carpeta /perfil/
   const urlPerfil = negocio.slug 
-    ? `${urlBase}/perfil/${negocio.slug}.html` 
-    : `${urlBase}/perfil-premium.html?id=${negocio.id}`;
+    ? `${urlBase}/betabuscador/perfil/${negocio.slug}.html` 
+    : `${urlBase}/betabuscador/perfil-premium.html?id=${negocio.id}`;
   
   const titulo = `${negocio.nombre} - deedpri`;
   const descripcion = negocio.descripcion || `${negocio.subcategoria || negocio.categoria} en ${negocio.municipio}`;
@@ -525,10 +525,10 @@ function obtenerUrlCompartir(negocio) {
   
   // Para GitHub Pages, usar .html al final en carpeta /perfil/
   if (negocio.slug) {
-    return `${urlBase}/perfil/${negocio.slug}.html`;
+    return `${urlBase}/betabuscador/perfil/${negocio.slug}.html`;
   }
   // Fallback: URL con ID
-  return `${urlBase}/perfil/${negocio.id}.html`;
+  return `${urlBase}/betabuscador/perfil/${negocio.id}.html`;
 }
 
 /**
