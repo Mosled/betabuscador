@@ -11,7 +11,6 @@
   
   <!-- Estilos -->
   <link rel="stylesheet" href="assets/css/homepage.css">
-  <link rel="stylesheet" href="assets/css/buscador.css">
 </head>
 <body>
 
@@ -20,16 +19,19 @@
     <div class="logo">deedpri.</div>
   </header>
 
-  <!-- OFERTAS DEL DÍA -->
-  <section class="ofertas-hero">
-    <h2 class="section-title">🔥 OFERTAS DEL DÍA</h2>
-    <div class="ofertas-carrusel">
-      <!-- Se carga con JavaScript -->
-    </div>
-  </section>
-
-  <!-- BUSCADOR -->
+  <!-- HERO BUSCADOR CON VIDA ✨ -->
   <section class="buscador-compacto">
+    <!-- Contenido Hero -->
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Encuentra todo lo que <span>necesitas</span>
+      </h1>
+      <p class="hero-subtitle">
+        Negocios locales activos en Zacualtipán y sus alrededores
+      </p>
+    </div>
+    
+    <!-- Buscador -->
     <div class="search-box">
       <i class="fas fa-search"></i>
       <input 
@@ -54,6 +56,14 @@
       <button class="voice-btn" id="voiceBtn">
         <i class="fas fa-microphone"></i>
       </button>
+    </div>
+  </section>
+
+  <!-- OFERTAS DEL DÍA -->
+  <section class="ofertas-hero">
+    <h2 class="section-title">🔥 OFERTAS DEL DÍA</h2>
+    <div class="ofertas-carrusel">
+      <!-- Se carga con JavaScript -->
     </div>
   </section>
 
@@ -105,7 +115,7 @@
   <!-- SCRIPTS -->
   <script src="assets/js/negocios-data.js"></script>
   <script src="assets/js/homepage.js"></script>
- <!-- Script botón flotante -->
+  <!-- Script botón flotante -->
   <script>
     const floatingCta = document.getElementById('floatingCta');
     if (floatingCta) {

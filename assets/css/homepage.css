@@ -1,5 +1,5 @@
 /* ========================================
-   HOMEPAGE DEEDPRI - OPCIÓN A
+   HOMEPAGE DEEDPRI - LIMPIO Y OPTIMIZADO
    Archivo: homepage.css
    ======================================== */
 
@@ -24,7 +24,9 @@ body {
   color: #fff;
 }
 
-/* === HEADER === */
+/* ========================================
+   HEADER
+   ======================================== */
 .header {
   padding: 1rem 3rem;
   background: rgba(0, 0, 0, 0.95);
@@ -60,7 +62,221 @@ body {
   transform: translateY(-2px);
 }
 
-/* === OFERTAS === */
+/* ========================================
+   HERO BUSCADOR
+   ======================================== */
+.buscador-compacto {
+  max-width: 1000px;
+  margin: 0 auto 4rem;
+  padding: 4rem 3rem;
+  position: relative;
+}
+
+/* Contenido Hero */
+.hero-content {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 0.8rem;
+  line-height: 1.2;
+}
+
+.hero-title span {
+  color: var(--amarillo);
+  display: inline-block;
+  position: relative;
+}
+
+/* Subrayado */
+.hero-title span::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--amarillo);
+  opacity: 0.5;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: #999;
+  font-weight: 400;
+}
+
+/* ========================================
+   BUSCADOR
+   ======================================== */
+.search-box {
+  background: rgba(34, 34, 34, 0.8);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 211, 0, 0.2);
+  border-radius: 50px;
+  padding: 1.2rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.4s ease;
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 211, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.search-box:hover {
+  border-color: var(--amarillo);
+  box-shadow: 
+    0 15px 50px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(255, 211, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.search-box:focus-within {
+  border-color: var(--amarillo);
+  box-shadow: 
+    0 15px 50px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(255, 211, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.search-box i.fa-search {
+  color: var(--amarillo);
+  font-size: 1.4rem;
+  transition: transform 0.3s ease;
+}
+
+.search-box:focus-within i.fa-search {
+  transform: scale(1.1);
+}
+
+.search-box input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.1rem;
+  outline: none;
+}
+
+.search-box input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 400;
+}
+
+/* Divisor */
+.search-divider {
+  width: 2px;
+  height: 35px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 211, 0, 0.3),
+    transparent
+  );
+}
+
+/* Selector de ubicación */
+.location-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.2rem;
+  background: rgba(255, 211, 0, 0.1);
+  border-radius: 25px;
+  border: 1px solid rgba(255, 211, 0, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.location-wrapper:hover {
+  background: rgba(255, 211, 0, 0.15);
+  border-color: rgba(255, 211, 0, 0.4);
+  transform: scale(1.02);
+}
+
+.location-icon {
+  color: var(--amarillo);
+  font-size: 1.2rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.location-select {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Flecha custom */
+.location-wrapper::after {
+  content: '\f078';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  color: var(--amarillo);
+  font-size: 0.8rem;
+  opacity: 0.7;
+  transition: transform 0.3s ease;
+}
+
+.location-wrapper:hover::after {
+  transform: translateY(2px);
+}
+
+.location-select option {
+  background: var(--gris-oscuro);
+  color: #fff;
+  padding: 1rem;
+}
+
+/* Botón de voz */
+.voice-btn {
+  background: linear-gradient(135deg, var(--amarillo), var(--amarillo-hover));
+  border: none;
+  color: #000;
+  font-size: 1.2rem;
+  cursor: pointer;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 211, 0, 0.3);
+}
+
+.voice-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 25px rgba(255, 211, 0, 0.5);
+}
+
+.voice-btn:active {
+  transform: scale(0.95);
+}
+
+/* ========================================
+   OFERTAS
+   ======================================== */
 .ofertas-hero {
   padding: 3rem;
   background: linear-gradient(to bottom, var(--negro-claro), var(--negro));
@@ -137,92 +353,9 @@ body {
   font-size: 2.5rem;
 }
 
-/* === BUSCADOR === */
-.buscador-compacto {
-  max-width: 1000px;
-  margin: 0 auto 4rem;
-  padding: 0 3rem;
-}
-
-.search-box {
-  background: var(--gris-oscuro);
-  border: 2px solid var(--gris-medio);
-  border-radius: 50px;
-  padding: 1rem 2rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  transition: border-color 0.3s;
-}
-
-.search-box:hover {
-  border-color: var(--amarillo);
-}
-
-.search-box i.fa-search {
-  color: var(--amarillo);
-  font-size: 1.3rem;
-}
-
-.search-box input {
-  flex: 1;
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 1.1rem;
-  outline: none;
-}
-
-.search-box input::placeholder {
-  color: #999;
-}
-
-.search-divider {
-  width: 2px;
-  height: 30px;
-  background: #444;
-}
-
-.location-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.location-icon {
-  color: var(--amarillo);
-  font-size: 1.1rem;
-}
-
-.location-select {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  outline: none;
-  padding: 0.5rem;
-}
-
-.location-select option {
-  background: var(--gris-oscuro);
-}
-
-.voice-btn {
-  background: none;
-  border: none;
-  color: var(--amarillo);
-  font-size: 1.3rem;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.voice-btn:hover {
-  transform: scale(1.1);
-}
-
-/* === TOP 10 === */
+/* ========================================
+   TOP 10
+   ======================================== */
 .top10-section {
   padding: 3rem;
 }
@@ -283,7 +416,9 @@ body {
   font-size: 0.9rem;
 }
 
-/* === CATEGORÍAS === */
+/* ========================================
+   CATEGORÍAS
+   ======================================== */
 .categorias-section {
   padding: 3rem;
 }
@@ -317,7 +452,6 @@ body {
 /* ========================================
    BOTÓN FLOTANTE CTA
    ======================================== */
-
 .floating-cta {
   position: fixed;
   bottom: 2rem;
@@ -368,20 +502,9 @@ body {
   transform: translateX(5px);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .floating-cta {
-    bottom: 1.5rem;
-    right: 1.5rem;
-    padding: 1rem 1.8rem;
-  }
-  
-  .floating-cta span {
-    font-size: 0.95rem;
-  }
-}
-
-/* === RESPONSIVE === */
+/* ========================================
+   RESPONSIVE - TABLET
+   ======================================== */
 @media (max-width: 1024px) {
   .ofertas-carrusel {
     grid-template-columns: 1fr 1fr;
@@ -401,33 +524,59 @@ body {
   }
 }
 
+/* ========================================
+   RESPONSIVE - MÓVIL
+   ======================================== */
 @media (max-width: 768px) {
+  /* HEADER */
   .header {
     padding: 1rem 1.5rem;
   }
   
-  .ofertas-hero,
-  .buscador-compacto,
-  .top10-section,
-  .categorias-section {
-    padding: 2rem 1.5rem;
+  .logo {
+    font-size: 1.5rem;
   }
   
-  .ofertas-carrusel {
-    grid-template-columns: 1fr;
+  .btn-agregar-negocio {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
   }
   
-  .oferta-card.principal {
-    grid-column: span 1;
+  /* BUSCADOR */
+  .buscador-compacto {
+    padding: 2.5rem 1rem 2rem;
+    margin: 0 0 2rem;
+  }
+  
+  .hero-content {
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 0.95rem;
   }
   
   .search-box {
     flex-wrap: wrap;
+    padding: 1rem 1.2rem;
+    gap: 0.8rem;
+    border-radius: 25px;
+  }
+  
+  .search-box i.fa-search {
+    font-size: 1.1rem;
   }
   
   .search-box input {
     width: 100%;
     order: 1;
+    font-size: 0.95rem;
+    padding: 0.5rem 0;
   }
   
   .search-divider {
@@ -438,23 +587,188 @@ body {
     order: 2;
     width: 100%;
     justify-content: center;
+    padding: 0.8rem 1rem;
+  }
+  
+  .location-icon {
+    font-size: 1rem;
+  }
+  
+  .location-select {
+    font-size: 0.9rem;
+    flex: 1;
+    text-align: center;
   }
   
   .voice-btn {
     order: 3;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  
+  /* OFERTAS */
+  .ofertas-hero {
+    padding: 1.5rem 1rem;
+  }
+  
+  .section-title {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .ofertas-carrusel {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .oferta-card.principal {
+    grid-column: span 1;
+  }
+  
+  .oferta-card.principal .oferta-img {
+    height: 220px;
+  }
+  
+  .oferta-card:not(.principal) .oferta-img {
+    height: 180px;
+  }
+  
+  .oferta-overlay {
+    padding: 1rem;
+  }
+  
+  .oferta-badge {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .oferta-title {
+    font-size: 1rem;
+  }
+  
+  .oferta-card.principal .oferta-title {
+    font-size: 1.5rem;
+  }
+  
+  /* TOP 10 */
+  .top10-section {
+    padding: 1.5rem 1rem;
   }
   
   .top10-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .top10-img {
+    height: 180px;
+  }
+  
+  .top10-number {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+  }
+  
+  .top10-info {
+    padding: 0.7rem;
+  }
+  
+  .top10-name {
+    font-size: 0.9rem;
+  }
+  
+  .top10-rating {
+    font-size: 0.8rem;
+  }
+  
+  /* CATEGORÍAS */
+  .categorias-section {
+    padding: 1.5rem 1rem;
   }
   
   .categorias-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+  }
+  
+  .categoria-card {
+    padding: 1.2rem 0.6rem;
+  }
+  
+  .categoria-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* BOTÓN FLOTANTE */
+  .floating-cta {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.8rem 1.3rem;
+  }
+  
+  .floating-cta span {
+    font-size: 0.85rem;
+  }
+  
+  .floating-cta i {
+    font-size: 1rem;
   }
 }
 
+/* ========================================
+   RESPONSIVE - MÓVIL PEQUEÑO
+   ======================================== */
 @media (max-width: 480px) {
+  .logo {
+    font-size: 1.3rem;
+  }
+  
+  .btn-agregar-negocio {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .buscador-compacto {
+    padding: 2rem 0.8rem 1.5rem;
+  }
+  
+  .hero-title {
+    font-size: 1.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 0.85rem;
+  }
+  
+  .oferta-card.principal .oferta-img {
+    height: 180px;
+  }
+  
+  .oferta-card:not(.principal) .oferta-img {
+    height: 150px;
+  }
+  
+  .oferta-title {
+    font-size: 0.9rem;
+  }
+  
+  .oferta-card.principal .oferta-title {
+    font-size: 1.2rem;
+  }
+  
   .categorias-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .floating-cta {
+    padding: 0.6rem 1rem;
+  }
+  
+  .floating-cta span {
+    font-size: 0.75rem;
   }
 }
