@@ -5,6 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="page-title">Perfil Premium - deedpri</title>
   
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="business.business">
+  <meta property="og:url" content="" id="og-url">
+  <meta property="og:title" content="" id="og-title">
+  <meta property="og:description" content="" id="og-description">
+  <meta property="og:image" content="" id="og-image">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="" id="twitter-url">
+  <meta property="twitter:title" content="" id="twitter-title">
+  <meta property="twitter:description" content="" id="twitter-description">
+  <meta property="twitter:image" content="" id="twitter-image">
+  
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
@@ -12,46 +26,33 @@
   <link rel="stylesheet" href="assets/css/perfil-premium.css">
 </head>
 <body>
-
   <!-- HEADER -->
   <header class="header">
     <div class="header-content">
-      <a href="index.html" class="logo">deedpri.</a>
-      <a href="index.html" class="btn-volver">
+      <a href="index.html" class="back-btn">
         <i class="fas fa-arrow-left"></i>
-        <span>Volver</span>
       </a>
+      <div class="logo">deedpri</div>
     </div>
   </header>
 
-  <!-- PERFIL HEADER -->
+  <!-- PERFIL HERO -->
   <section class="profile-hero">
-    <div class="container">
-      <div class="profile-header">
-        <div class="profile-pic" id="profile-pic"></div>
-        <div class="profile-info">
-          <h1 id="negocio-nombre">Cargando...</h1>
-          <div class="profile-meta">
-            <span class="rating" id="rating"></span>
-            <span class="separator">•</span>
-            <span class="category" id="category"></span>
-          </div>
-          <div class="badges" id="badges-container"></div>
-        </div>
-      </div>
-    </div>
+    <div class="profile-pic" id="profile-pic"></div>
+    <h1 class="profile-name" id="negocio-nombre">Cargando...</h1>
+    <div class="profile-rating" id="rating"></div>
+    <p class="profile-category" id="category"></p>
+    <div class="profile-badges" id="badges-container"></div>
   </section>
 
-  <!-- CARDS PINTEREST STYLE -->
+  <!-- CARDS CONTAINER -->
   <section class="cards-section">
-    <div class="container">
-      <div class="cards-masonry" id="cards-container">
-        <!-- Cards se generan dinámicamente con JS -->
-      </div>
+    <div class="cards-container" id="cards-container">
+      <!-- Cards generadas dinámicamente -->
     </div>
   </section>
 
-  <!-- MODAL PARA CONTENIDO -->
+  <!-- MODAL -->
   <div class="modal" id="modal">
     <div class="modal-overlay" id="modal-overlay"></div>
     <div class="modal-content">
@@ -66,14 +67,11 @@
 
   <!-- FOOTER -->
   <footer class="footer">
-    <div class="container">
-      <p>&copy; 2025 deedpri - Información que vive</p>
-    </div>
+    <p>&copy; 2025 deedpri. Todos los derechos reservados.</p>
   </footer>
 
-  <!-- SCRIPTS -->
+  <!-- Scripts -->
   <script src="assets/js/negocios-data.js"></script>
   <script src="assets/js/perfil-premium.js"></script>
-
 </body>
 </html>

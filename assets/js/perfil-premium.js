@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Cargar información
   cargarHeader(negocio);
+  actualizarOpenGraph(negocio);
   cargarCards(negocio);
   inicializarModal();
 });
@@ -129,6 +130,8 @@ function cargarCards(negocio) {
       } else if (cardAction === 'link') {
         const url = this.dataset.url;
         window.open(url, '_blank');
+      } else if (cardAction === 'compartir') {
+        abrirModalCompartir(negocio);
       }
     });
   });
@@ -142,6 +145,16 @@ function generarCardsSegunCategoria(negocio) {
   
   // Cards base que todos tienen
   const cardsBase = [
+    {
+      type: 'compartir',
+      title: 'Compartir Perfil',
+      desc: 'QR, redes sociales y más',
+      icon: '🔗',
+      gradient: 'gradient-purple',
+      size: 'small',
+      badge: '✨ NUEVO',
+      action: 'compartir'
+    },
     {
       type: 'whatsapp',
       title: 'WhatsApp',
@@ -476,5 +489,164 @@ function inicializarModal() {
     }
   });
 }
+
+/**
+ * Actualizar Open Graph tags para previews en redes sociales
+ */
+function actualizarOpenGraph(negocio) {
+  const urlBase = window.location.origin;
+  // Para GitHub Pages, usar .html en carpeta /perfil/
+  const urlPerfil = negocio.slug 
+    ? `${urlBase}/perfil/${negocio.slug}.html` 
+    : `${urlBase}/perfil-premium.html?id=${negocio.id}`;
+  
+  const titulo = `${negocio.nombre} - deedpri`;
+  const descripcion = negocio.descripcion || `${negocio.subcategoria || negocio.categoria} en ${negocio.municipio}`;
+  const imagen = negocio.foto || '';
+  
+  // Open Graph
+  document.getElementById('og-url').content = urlPerfil;
+  document.getElementById('og-title').content = titulo;
+  document.getElementById('og-description').content = descripcion;
+  document.getElementById('og-image').content = imagen;
+  
+  // Twitter
+  document.getElementById('twitter-url').content = urlPerfil;
+  document.getElementById('twitter-title').content = titulo;
+  document.getElementById('twitter-description').content = descripcion;
+  document.getElementById('twitter-image').content = imagen;
+}
+
+/**
+ * Obtener URL para compartir (optimizado para GitHub Pages)
+ */
+function obtenerUrlCompartir(negocio) {
+  const urlBase = window.location.origin;
+  
+  // Para GitHub Pages, usar .html al final en carpeta /perfil/
+  if (negocio.slug) {
+    return `${urlBase}/perfil/${negocio.slug}.html`;
+  }
+  // Fallback: URL con ID
+  return `${urlBase}/perfil/${negocio.id}.html`;
+}
+
+/**
+ * Generar URL de QR Code
+ */
+function generarQR(url, tamanio = 400) {
+  // Usar API pública de QR Code
+  return `https://api.qrserver.com/v1/create-qr-code/?size=${tamanio}x${tamanio}&data=${encodeURIComponent(url)}`;
+}
+
+/**
+ * Abrir modal de compartir
+ */
+function abrirModalCompartir(negocio) {
+  const modal = document.getElementById('modal');
+  const modalBody = document.getElementById('modal-body');
+  
+  const urlCompartir = obtenerUrlCompartir(negocio);
+  const urlQR = generarQR(urlCompartir, 400);
+  const textoCompartir = `¡Conoce ${negocio.nombre} en deedpri!`;
+  
+  // URLs para compartir en redes
+  const urlWhatsApp = `https://wa.me/?text=${encodeURIComponent(textoCompartir + ' ' + urlCompartir)}`;
+  const urlFacebook = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlCompartir)}`;
+  const urlTwitter = `https://twitter.com/intent/tweet?text=${encodeURIComponent(textoCompartir)}&url=${encodeURIComponent(urlCompartir)}`;
+  
+  const contenido = `
+    <h2>🔗 Compartir Perfil</h2>
+    <p style="margin-bottom: 2rem; color: #666;">Comparte tu perfil en redes sociales</p>
+    
+    <!-- URL para copiar -->
+    <div style="background: #f5f5f5; padding: 1rem; border-radius: 12px; margin-bottom: 2rem;">
+      <p style="font-size: 0.85rem; color: #666; margin-bottom: 0.5rem;">Tu enlace:</p>
+      <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <input type="text" 
+               value="${urlCompartir}" 
+               id="url-compartir" 
+               readonly
+               style="flex: 1; padding: 0.8rem; border: 2px solid #ddd; border-radius: 8px; font-size: 0.95rem;">
+        <button onclick="copiarUrl()" 
+                style="padding: 0.8rem 1.5rem; background: #ffd300; border: none; border-radius: 8px; font-weight: 700; cursor: pointer;">
+          <i class="fas fa-copy"></i> Copiar
+        </button>
+      </div>
+      <p id="copiado-msg" style="color: #2e7d32; font-size: 0.85rem; margin-top: 0.5rem; display: none;">
+        ✅ ¡Copiado al portapapeles!
+      </p>
+    </div>
+    
+    <!-- Botones de redes sociales -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+      <a href="${urlWhatsApp}" 
+         target="_blank"
+         style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; background: #25D366; color: white; text-decoration: none; border-radius: 12px; font-weight: 600;">
+        <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i>
+        WhatsApp
+      </a>
+      
+      <a href="${urlFacebook}" 
+         target="_blank"
+         style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; background: #1877f2; color: white; text-decoration: none; border-radius: 12px; font-weight: 600;">
+        <i class="fab fa-facebook" style="font-size: 1.5rem;"></i>
+        Facebook
+      </a>
+      
+      <a href="${urlTwitter}" 
+         target="_blank"
+         style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; background: #1da1f2; color: white; text-decoration: none; border-radius: 12px; font-weight: 600;">
+        <i class="fab fa-twitter" style="font-size: 1.5rem;"></i>
+        Twitter
+      </a>
+    </div>
+    
+    <!-- QR Code -->
+    <div style="text-align: center; padding: 2rem; background: #f9f9f9; border-radius: 16px;">
+      <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">📱 Código QR</h3>
+      <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">
+        Descarga este código QR para ponerlo en tu local o imprimir
+      </p>
+      <img src="${urlQR}" 
+           alt="QR Code" 
+           style="max-width: 300px; width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 1rem;">
+      <br>
+      <a href="${urlQR}" 
+         download="qr-${negocio.slug || negocio.id}.png"
+         style="display: inline-block; padding: 1rem 2rem; background: #2a2a2a; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; margin-top: 1rem;">
+        <i class="fas fa-download"></i> Descargar QR
+      </a>
+    </div>
+  `;
+  
+  modalBody.innerHTML = contenido;
+  modal.classList.add('active');
+}
+
+/**
+ * Copiar URL al portapapeles
+ */
+function copiarUrl() {
+  const input = document.getElementById('url-compartir');
+  input.select();
+  input.setSelectionRange(0, 99999); // Para móviles
+  
+  navigator.clipboard.writeText(input.value).then(() => {
+    const msg = document.getElementById('copiado-msg');
+    msg.style.display = 'block';
+    
+    setTimeout(() => {
+      msg.style.display = 'none';
+    }, 3000);
+  }).catch(err => {
+    console.error('Error al copiar:', err);
+    alert('URL copiada: ' + input.value);
+  });
+}
+
+// Hacer funciones globales para que funcionen desde HTML inline
+window.copiarUrl = copiarUrl;
+window.abrirModalCompartir = abrirModalCompartir;
 
 console.log('✅ perfil-premium.js cargado');

@@ -11,6 +11,7 @@ const negociosDB = [
   {
     id: 1,
     nombre: "Restaurante El Sabroso",
+    slug: "restaurante-el-sabroso",
     plan: "premium",
     categoria: "alimentos",
     subcategoria: "Restaurantes",
@@ -54,6 +55,7 @@ const negociosDB = [
   {
     id: 2,
     nombre: "Consultorio Dental Dr. García",
+    slug: "consultorio-dental-dr-garcia",
     categoria: "salud",
     subcategoria: "Dentistas",
     municipio: "pachuca",
@@ -97,6 +99,7 @@ const negociosDB = [
   {
     id: 3,
     nombre: "Pizzería La Italiana",
+    slug: "pizzeria-la-italiana",
     categoria: "alimentos",
     subcategoria: "Pizzerías",
     municipio: "zacualtipan",
@@ -135,6 +138,7 @@ const negociosDB = [
   {
     id: 4,
     nombre: "Plomería Jiménez 24/7",
+    slug: "plomeria-jimenez-247",
     categoria: "servicios",
     subcategoria: "Plomería",
     municipio: "tulancingo",
@@ -164,6 +168,7 @@ const negociosDB = [
   {
     id: 5,
     nombre: "Veterinaria Pet Care",
+    slug: "veterinaria-pet-care",
     categoria: "servicios",
     subcategoria: "Veterinarios",
     municipio: "pachuca",
@@ -192,6 +197,7 @@ const negociosDB = [
   {
     id: 6,
     nombre: "Ferretería El Constructor",
+    slug: "ferreteria-el-constructor",
     categoria: "compras",
     subcategoria: "Ferreterías",
     municipio: "zacualtipan",
@@ -221,6 +227,7 @@ const negociosDB = [
   {
     id: 7,
     nombre: "Cafetería Aroma",
+    slug: "cafeteria-aroma",
     categoria: "alimentos",
     subcategoria: "Cafeterías",
     municipio: "pachuca",
@@ -257,6 +264,7 @@ const negociosDB = [
   {
     id: 8,
     nombre: "Estética Unisex Glamour",
+    slug: "estetica-unisex-glamour",
     categoria: "servicios",
     subcategoria: "Estéticas",
     municipio: "mineral-monte",
@@ -293,6 +301,7 @@ const negociosDB = [
   {
     id: 9,
     nombre: "Gym Fitness Plus",
+    slug: "gym-fitness-plus",
     categoria: "salud",
     subcategoria: "Gimnasios",
     municipio: "tulancingo",
@@ -322,6 +331,7 @@ const negociosDB = [
   {
     id: 10,
     nombre: "Taller Mecánico Rodríguez",
+    slug: "taller-mecanico-rodriguez",
     categoria: "servicios",
     subcategoria: "Mecánica",
     municipio: "actopan",
@@ -353,6 +363,7 @@ const negociosDB = [
   {
     id: 11,
     nombre: "Tacos Don Pepe",
+    slug: "tacos-don-pepe",
     categoria: "alimentos",
     subcategoria: "Taquerías",
     municipio: "zacualtipan",
@@ -371,6 +382,7 @@ const negociosDB = [
   {
     id: 12,
     nombre: "Papelería Escolar",
+    slug: "papeleria-escolar",
     categoria: "compras",
     subcategoria: "Papelerías",
     municipio: "pachuca",
@@ -389,6 +401,7 @@ const negociosDB = [
   {
     id: 13,
     nombre: "Electricista Ramírez",
+    slug: "electricista-ramirez",
     categoria: "servicios",
     subcategoria: "Electricistas",
     municipio: "tulancingo",
@@ -407,6 +420,7 @@ const negociosDB = [
   {
     id: 14,
     nombre: "Tienda de Abarrotes La Guadalupana",
+    slug: "tienda-de-abarrotes-la-guadalupana",
     categoria: "compras",
     subcategoria: "Abarrotes",
     municipio: "zacualtipan",
@@ -425,6 +439,7 @@ const negociosDB = [
   {
     id: 15,
     nombre: "Consultorio Médico General",
+    slug: "consultorio-medico-general",
     categoria: "salud",
     subcategoria: "Consultorios",
     municipio: "mineral-monte",
@@ -443,6 +458,7 @@ const negociosDB = [
   {
     id: 16,
     nombre: "Carpintería San José",
+    slug: "carpinteria-san-jose",
     categoria: "servicios",
     subcategoria: "Carpintería",
     municipio: "actopan",
@@ -461,6 +477,7 @@ const negociosDB = [
   {
     id: 17,
     nombre: "Panadería El Trigo",
+    slug: "panaderia-el-trigo",
     categoria: "alimentos",
     subcategoria: "Panaderías",
     municipio: "pachuca",
@@ -479,6 +496,7 @@ const negociosDB = [
   {
     id: 18,
     nombre: "Cerrajería Express",
+    slug: "cerrajeria-express",
     categoria: "urgencias",
     subcategoria: "Cerrajeros",
     municipio: "zacualtipan",
@@ -497,6 +515,7 @@ const negociosDB = [
   {
     id: 19,
     nombre: "Lavandería Limpieza Total",
+    slug: "lavanderia-limpieza-total",
     categoria: "hogar",
     subcategoria: "Lavanderías",
     municipio: "tulancingo",
@@ -515,6 +534,7 @@ const negociosDB = [
   {
     id: 20,
     nombre: "Refaccionaria Auto Partes",
+    slug: "refaccionaria-auto-partes",
     categoria: "compras",
     subcategoria: "Refaccionarias",
     municipio: "pachuca",

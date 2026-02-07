@@ -167,7 +167,7 @@ body {
   padding: 2rem 0 3rem;
 }
 
-.cards-masonry {
+.cards-container, #cards-container {
   column-count: 2;  /* 2 columnas desde móvil */
   column-gap: 0.8rem;
 }
@@ -433,7 +433,7 @@ body {
    RESPONSIVE
    ======================================== */
 @media (min-width: 640px) {
-  .cards-masonry {
+  .cards-container, #cards-container {
     column-count: 2;
     column-gap: 1rem;
   }
@@ -495,7 +495,7 @@ body {
     padding: 0 2rem;
   }
   
-  .cards-masonry {
+  .cards-container, #cards-container {
     column-count: 3;
     column-gap: 1.5rem;
   }
